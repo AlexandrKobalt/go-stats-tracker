@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	api "github.com/AlexandrKobalt/go-stats-tracker/pkg/api"
+	pkg "github.com/AlexandrKobalt/go-stats-tracker/pkg/api"
 	"github.com/go-chi/chi"
 )
 
@@ -17,7 +17,7 @@ func main() {
 	})
 
 	r.Post("/getStats", func(w http.ResponseWriter, r *http.Request) {
-		stats, err := api.GetAllStats()
+		stats, err := pkg.GetAllStats()
 		if err != nil {
 			panic("it's just impossible, I can't believe it")
 		}
