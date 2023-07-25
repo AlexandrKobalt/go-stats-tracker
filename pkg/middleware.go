@@ -1,18 +1,28 @@
-package statstracker
+package pkg
 
-import "net/http"
+import (
+	"net/http"
+	"time"
 
-type StatisticsMiddleware struct {
-	stats Statistics
-	next  http.Handler
-}
+	"github.com/AlexandrKobalt/go-stats-tracker/internal"
+)
 
-func NewStatisticsMiddleware(stats Statistics, next http.Handler) *StatisticsMiddleware {
-	return &StatisticsMiddleware{stats: stats, next: next}
-}
+func StatsMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		startTime := time.Now()
 
-func (m *StatisticsMiddleware) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	// Увеличить счетчик запросов для данного URL
-	m.stats.Increment(r.URL.Path)
-	m.next.ServeHTTP(w, r)
+		next.ServeHTTP(w, r)
+
+		endTime := time.Now()
+
+		processTime := endTime.Sub(startTime)
+
+		processData := internal.ProcessData{
+			RequestProcessTime: processTime,
+		}
+
+		url := r.URL.Path
+		stats := internal.GetStats(url)
+		stats.Update(processData)
+	})
 }
