@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/AlexandrKobalt/go-stats-tracker/internal"
 	"github.com/AlexandrKobalt/go-stats-tracker/pkg"
 	"github.com/go-chi/chi"
 )
@@ -19,7 +18,7 @@ func main() {
 	})
 
 	r.Post("/getStats", func(w http.ResponseWriter, r *http.Request) {
-		jsonResponse, _ := json.Marshal(internal.GetAllStats())
+		jsonResponse, _ := json.Marshal(pkg.GetAllStats())
 
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.Write(jsonResponse)

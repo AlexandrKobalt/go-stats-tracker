@@ -1,29 +1,8 @@
 package internal
 
 import (
-	"fmt"
 	"time"
 )
-
-// Data storage
-type RouteStats struct {
-	TotalRequestsCount int           `json:"totalRequestsCount"`
-	RequestsFrequency  float64       `json:"requestsFrequency"`  // per second
-	AverageProcessTime time.Duration `json:"averageProcessTime"` // in ms
-	LastRequestTime    time.Time     `json:"lastRequestTime"`
-}
-
-// Interpreting data for the user
-type RouteStatsOutput struct {
-	TotalRequestsCount string `json:"totalRequestsCount"`
-	RequestsFrequency  string `json:"requestsFrequency"`  // per second
-	AverageProcessTime string `json:"averageProcessTime"` // in ms
-	LastRequestTime    string `json:"lastRequestTime"`
-}
-
-type ProcessData struct {
-	RequestProcessTime time.Duration
-}
 
 var routeStats map[string]*RouteStats
 var initTime time.Time
@@ -33,25 +12,14 @@ func init() {
 	initTime = time.Now()
 }
 
-func GetAllStats() map[string]RouteStatsOutput {
-	destMap := make(map[string]RouteStatsOutput)
+func GetCurrentRouteStats() map[string]RouteStats {
+	destMap := make(map[string]RouteStats)
 
 	for key, value := range routeStats {
-		destMap[key] = convertToOutput(*value)
+		destMap[key] = *value
 	}
 
 	return destMap
-}
-
-func convertToOutput(stats RouteStats) RouteStatsOutput {
-	output := RouteStatsOutput{
-		TotalRequestsCount: fmt.Sprint(stats.TotalRequestsCount),
-		RequestsFrequency:  fmt.Sprintf("%.2f per second", stats.RequestsFrequency),
-		AverageProcessTime: fmt.Sprintf("%.2s ms", fmt.Sprint(stats.AverageProcessTime.Milliseconds())),
-		LastRequestTime:    stats.LastRequestTime.Format("2006-01-02 15:04:05"),
-	}
-
-	return output
 }
 
 func GetStats(url string) *RouteStats {
