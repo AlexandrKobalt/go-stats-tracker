@@ -21,8 +21,6 @@ func StatsMiddleware(next http.Handler) http.Handler {
 			RequestProcessTime: processTime,
 		}
 
-		url := r.URL.Path
-		stats := internal.GetStats(url)
-		stats.Update(processData)
+		internal.UpdateStat(r.URL.Path, processData)
 	})
 }

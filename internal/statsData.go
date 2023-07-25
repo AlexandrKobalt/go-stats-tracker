@@ -22,7 +22,7 @@ func GetCurrentRouteStats() map[string]RouteStats {
 	return destMap
 }
 
-func GetStats(url string) *RouteStats {
+func getStats(url string) *RouteStats {
 	stats, exists := routeStats[url]
 	if !exists {
 		stats = &RouteStats{}
@@ -30,6 +30,11 @@ func GetStats(url string) *RouteStats {
 	}
 
 	return stats
+}
+
+func UpdateStat(url string, processData ProcessData) {
+	stats := getStats(url)
+	stats.Update(processData)
 }
 
 func (stats *RouteStats) Update(processData ProcessData) {

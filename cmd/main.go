@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -18,10 +17,13 @@ func main() {
 	})
 
 	r.Post("/getStats", func(w http.ResponseWriter, r *http.Request) {
-		jsonResponse, _ := json.Marshal(pkg.GetAllStats())
+		stats, err := pkg.GetAllStats()
+		if err != nil {
+			panic("it's just impossible, I can't believe it")
+		}
 
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
-		w.Write(jsonResponse)
+		w.Write(stats)
 	})
 
 	http.ListenAndServe("localhost:8081", r)
