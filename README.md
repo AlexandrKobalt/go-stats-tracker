@@ -24,13 +24,13 @@ if err != nil {
     "/getStats": {
         "totalRequestsCount": "14",
         "requestsFrequency": "0.54 per second",
-        "averageProcessTime": "0 ms",
+        "averageProcessTime": "1 ms",
         "lastRequestTime": "2023-07-25 15:24:23"
     },
     "/post": {
         "totalRequestsCount": "508",
         "requestsFrequency": "6.52 per second",
-        "averageProcessTime": "0 ms",
+        "averageProcessTime": "2.4 ms",
         "lastRequestTime": "2023-07-25 15:25:15"
     }
 }
