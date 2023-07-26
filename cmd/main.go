@@ -10,7 +10,7 @@ import (
 
 func main() {
 	r := chi.NewRouter()
-	r.Use(api.StatsMiddleware)
+	r.Use(pkg.StatsMiddleware)
 
 	r.Post("/post", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Got POST request!")
