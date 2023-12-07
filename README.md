@@ -1,2 +1,2 @@
-# [Русский](./README-ru.md) 🇷🇺
-# [English](./README-en.md) 🇬🇧/🇺🇸
+# [Русский](./README-ru.md) :flag_ru:
+# [English](./README-en.md) :flag_en:
